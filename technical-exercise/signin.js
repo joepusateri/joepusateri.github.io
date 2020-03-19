@@ -45,7 +45,7 @@ $('#inputEmail').keypress(function(e) {
 
 $('#inputPassword').keypress(function(e) {
     if (e.keyCode == 13) {
-        $('signin-button').trigger("click");
+        $('#signin-button').trigger("click");
     }
 });
 
