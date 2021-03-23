@@ -77,8 +77,8 @@ var regEx = /incidents\/(.*)/;
 }
     
 function getAPI(){
-    alert(window.location.search);
     const urlParams = new URLSearchParams(window.location.search);
+    alert(urlParams.get("api-token"));
     return urlParams.get("api-token");
 }    
 
