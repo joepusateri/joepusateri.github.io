@@ -153,11 +153,6 @@ function validateUpdate(){
     }   
     else
     {
-
-        if (getIncidentID() == "")
-        {
-            alert("No incident");
-        }
         sendPayload(buildPayload());
         document.getElementById("validation_msg").style.display = "none";
         return true;
