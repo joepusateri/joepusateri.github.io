@@ -13,26 +13,67 @@
 <tbody>
     <tr>
         <td>
-            <p><span class="mandatory">*</span>Incident Classification</p>
+            <p><span class="mandatory">*</span>Close Code</p>
         </td>
         <td>
             <select name="close_code" style="width:200px" id="close_code">
                 <option value="none" selected="none">--None--</option>
-                <option value="False-positive">False-positive</option>
-                <option value="ThresholdTuningActionApplied">Threshold tuning action applied</option>
-                <option value="TurnedToRealIncident">Turned to real Incident</option>
+                <option value="IncidentSolved">Incident Solved</option>
+                <option value="NotSolved">Not Solved</option>
+                <option value="SelfCorrected">Self Corrected</option>
+                <option value="WorkaroundSufficient">Workaround Sufficient</option>
+                <option value="ConvertedtoSR">Converted to SR</option>
             </select>
         </td>
     </tr>
     <tr>
         <td>
-            <p><span class="mandatory">*</span>category</p>
+            <p><span class="mandatory">*</span>Action Code</p>
         </td>
         <td>
-            <select name="resolution_category" style="width:200px" id="resolution_category">
+            <select name="action_code" style="width:200px" id="resolution_category">
                 <option value="none" selected="none">--None--</option>
-                <option value="Reviewed">Reviewed</option>
-                <option value="NotReviewed">Not Reviewed</option>
+                <option value="ApplicationRestart">Application Restart</option>
+                <option value="ApplicationUpdate">Application Update</option>
+                <option value="DatabaseRestart">DatabaseRestart</option>
+                <option value="Education-Training">Education/Training</option>
+                <option value="SoftwareUpdate">Software Update</option>
+                <option value="Passwordreset">Password reset</option>
+                <option value="ProcessChange">Process or Procedure Change</option>
+                <option value="Reboot">Reboot</option>
+                <option value="Restart">Restart</option>
+                <option value="Retire">Retire</option>
+                <option value="Patch">Patch</option>
+                <option value="Update">Update</option>
+                <option value="Reconfigure">Reconfigure</option>
+                <option value="Repair">Repair</option>
+                <option value="Replace">Replace</option>
+                <option value="Discontinue">Discontinue</option>
+                <option value="NoActionRequired">No Action Required</option>
+            </select>
+        </td>
+    </tr>
+   <tr>
+        <td>
+            <p><span class="mandatory">*</span>Cause Code</p>
+        </td>
+        <td>
+            <select name="cause_code" style="width:200px" id="resolution_category">
+                <option value="none" selected="none">--None--</option>
+                <option value="AccessOrPermissionsError">Access Or Permissions Error</option>
+                <option value="CapacityExceeded">Capacity Exceeded</option>
+                <option value="ChangeImplFailure">Change Implementation Failure</option>
+                <option value="EnvFailure">Environmental Failure</option>
+                <option value="ExistingConfigurationError">Existing Configuration Error</option>
+                <option value="HardwareFailure">Hardware Failure</option>
+                <option value="HumanError">Human Error</option>
+                <option value="Malware">Malware</option>
+                <option value="Misuse">Misuse</option>
+                <option value="NotFound">Not Found</option>
+                <option value="ProcedureNotFollowed">Procedure Not Followed</option>
+                <option value="ProcessGap">Process Gap</option>
+                <option value="SoftwareDefect">Software Defect</option>
+                <option value="Vendor">Vendor</option>
             </select>
         </td>
     </tr>
@@ -78,7 +119,6 @@ var regEx = /incidents\/(.*)/;
     
 function getAPI(){
     const urlParams = new URLSearchParams(window.location.search);
-    alert(urlParams.get("api-token"));
     return urlParams.get("api-token");
 }    
 
