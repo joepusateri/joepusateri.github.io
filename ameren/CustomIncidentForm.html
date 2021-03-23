@@ -31,7 +31,7 @@
             <p><span class="mandatory">*</span>Action Code</p>
         </td>
         <td>
-            <select name="action_code" style="width:200px" id="resolution_category">
+            <select name="action_code" style="width:200px" id="action_code">
                 <option value="none" selected="none">--None--</option>
                 <option value="ApplicationRestart">Application Restart</option>
                 <option value="ApplicationUpdate">Application Update</option>
@@ -58,7 +58,7 @@
             <p><span class="mandatory">*</span>Cause Code</p>
         </td>
         <td>
-            <select name="cause_code" style="width:200px" id="resolution_category">
+            <select name="cause_code" style="width:200px" id="cause_code">
                 <option value="none" selected="none">--None--</option>
                 <option value="AccessOrPermissionsError">Access Or Permissions Error</option>
                 <option value="CapacityExceeded">Capacity Exceeded</option>
@@ -98,7 +98,7 @@
             <div id="validation_msg" class="validation_msg" name="validation_msg" style="display: none;">Please fill-in all the details</div>
         </td>
         <td>
-            <input type="submit" id="update" value="update" onclick="validateUpdate()" />
+            <input type="submit" id="update" value="Submit Resolution Information" onclick="validateUpdate()" />
         </td>
     </tr>
 </tbody>
