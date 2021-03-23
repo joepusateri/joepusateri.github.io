@@ -125,7 +125,7 @@ function getAPI(){
 //validates fields have been filled in and uses the notes section to update pagerduties notes section 
 function validateUpdate(){
 
-    if(document.getElementById("close_code").value=='none' || document.getElementById("resolution_category").value=='none' || document.getElementById("close_notes").value=='')
+    if(document.getElementById("close_code").value=='none' || document.getElementById("action_code").value=='none' || document.getElementById("cause_code").value=='none' || document.getElementById("close_notes").value=='')
     {
         document.getElementById("validation_msg").style.display = "block";
         return false;
