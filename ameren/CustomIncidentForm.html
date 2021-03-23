@@ -101,6 +101,14 @@
     </tr>
     <tr>
         <td>
+            <p>Optional PagerDuty URL</p>
+        </td>
+        <td>
+            <input type="text" id="pdurl" size="30">
+        </td>
+    </tr>
+    <tr>
+        <td>
             <div id="validation_msg" class="validation_msg" name="validation_msg" style="display: none;color:red">Please fill-in all the details</div>
         </td>
         <td>
@@ -118,12 +126,16 @@ function getIncidentID(){
     var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
 
     var regEx = /incidents\/(.*)/;
-    try {
-        return regEx.exec(url)[1];
+    var results = regEx.exec(url);
+    if (results != null) {
+        return results[1];
+    } else {
+        var results = regEx.exec(document.getElementById("pdurl").value);
+        if (results != null) {
+            return results[1];
+        }
     }
-    catch (e) {
-        return "";
-    }
+    return "";
 }
     
 function getAPI(){
@@ -134,7 +146,7 @@ function getAPI(){
 //validates fields have been filled in and uses the notes section to update pagerduties notes section 
 function validateUpdate(){
 
-    if(document.getElementById("close_code").value=='none' || document.getElementById("action_code").value=='none' || document.getElementById("cause_code").value=='none' || document.getElementById("close_notes").value=='')
+    if(document.getElementById("close_code").value=='none' || document.getElementById("action_code").value=='none' || document.getElementById("cause_code").value=='none' || document.getElementById("close_notes").value=='' || (document.getElementById("pdurl").value =='' && getIncidentID() == ''))
     {
         document.getElementById("validation_msg").style.display = "block";
         return false;
