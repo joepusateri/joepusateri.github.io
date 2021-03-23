@@ -78,7 +78,7 @@ var regEx = /incidents\/(.*)/;
 
 //validates fields have been filled in and uses the notes section to update pagerduties notes section 
 function validateUpdate(){
-    
+    alert(window.location.href);
     if(document.getElementById("close_code").value=='none' || document.getElementById("resolution_category").value=='none' || document.getElementById("close_notes").value=='')
     {
         document.getElementById("validation_msg").style.display = "block";
