@@ -112,15 +112,22 @@
 
 
 <script type="text/javascript"> 
-
+window.onload = onLoad;
+function onLoad()
+{
+    alert(document.referrer);
+}
 //grab incident ID from URL and regEx out
 function getIncidentID(){
-var url = (window.location != window.parent.location)
-            ? document.referrer
-            : document.location.href;
+    var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
 
-var regEx = /incidents\/(.*)/;
- return regEx.exec(url)[1]
+    var regEx = /incidents\/(.*)/;
+    try {
+        return regEx.exec(url)[1];
+    }
+    catch (e) {
+        return "";
+    }
 }
     
 function getAPI(){
@@ -139,6 +146,10 @@ function validateUpdate(){
     else
     {
 
+        if (getIncidentID() == "")
+        {
+            alert("No incident");
+        }
         sendPayload(buildPayload());
         document.getElementById("validation_msg").style.display = "none";
         return true;
@@ -179,7 +190,22 @@ function sendPayload(payload){
     });
 
 }
+//send payload to pagerduty API - must change token in the header section below
+function sendPayload(payload){
 
+    var email = document.getElementById("email")
+    
+     $.ajax({
+      method: "POST",
+      url: "https://api.pagerduty.com/incidents/"+getIncidentID()+"/notes",
+      headers: { 'Accept': 'application/vnd.pagerduty+json;version=2', 'Authorization': 'Token token='+getAPI(), 'Content-Type': 'application/json', 'From': email.value },
+      data: payload
+    })
+      .done(function( msg ) {
+        alert("Your incident will be updated shortly. No further action required!");
+    });
+
+}
 
 
 </script>
