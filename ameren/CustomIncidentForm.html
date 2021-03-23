@@ -75,13 +75,16 @@ var url = (window.location != window.parent.location)
 var regEx = /incidents\/(.*)/;
  return regEx.exec(url)[1]
 }
+    
+function getAPI(){
+    alert(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("api-token");
+}    
 
 //validates fields have been filled in and uses the notes section to update pagerduties notes section 
 function validateUpdate(){
-    alert(window.location.href);
-    alert(window.location.search);
-    const urlParams = new URLSearchParams(window.location.search);
-    alert(urlParams.get("api"));
+
     if(document.getElementById("close_code").value=='none' || document.getElementById("resolution_category").value=='none' || document.getElementById("close_notes").value=='')
     {
         document.getElementById("validation_msg").style.display = "block";
@@ -121,7 +124,7 @@ function sendPayload(payload){
      $.ajax({
       method: "POST",
       url: "https://api.pagerduty.com/incidents/"+getIncidentID()+"/notes",
-      headers: { 'Accept': 'application/vnd.pagerduty+json;version=2', 'Authorization': 'Token token={API-TOKEN}', 'Content-Type': 'application/json', 'From': email.value },
+      headers: { 'Accept': 'application/vnd.pagerduty+json;version=2', 'Authorization': 'Token token='+getAPI(), 'Content-Type': 'application/json', 'From': email.value },
       data: payload
     })
       .done(function( msg ) {
