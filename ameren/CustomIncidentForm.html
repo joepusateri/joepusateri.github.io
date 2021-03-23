@@ -143,12 +143,13 @@ function validateUpdate(){
 function buildPayload(){
 
     var notes = document.getElementById("close_notes").value
-    var incidentClass = document.getElementById("close_code").value
-    var category = document.getElementById("resolution_category").value
+    var close_code = document.getElementById("close_code").value
+    var action_code = document.getElementById("action_code").value
+    var cause_code = document.getElementById("cause_code").value
 
     var payload = '{' + 
           ' "note": { ' +
-          ' "content":' +'" '+" " + incidentClass + ", "+ category + ", " + notes +' "' +
+          ' "content":' +'" '+" close_code:" + close_code + ", action_code:"+ category + ", cause_code:"+ cause_code + ", notes:" + notes +' "' +
        '}' +
     '}'
 
