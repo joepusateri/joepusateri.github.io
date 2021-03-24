@@ -9,7 +9,7 @@
 
 
 <!-- Table for custom fields in incident -->
-<font size="2" face="Sans-serif" >
+<font size="2" face="Sans-serif" >a
 <table border="0">
     <tr>
         <td/>
@@ -123,10 +123,9 @@
 navigator.clipboard.readText()
   .then(text => {
     console.log('Pasted content: ', text);
-    alert(text);
-  })
-  .catch(err => {
-    console.error('Failed to read clipboard contents: ', err);
+    if (text.includes(".pagerduty.com/")) {
+        document.getElementById("pdurl").value=text;
+    }
   });
 
 //grab incident ID from URL and regEx out
