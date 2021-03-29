@@ -135,6 +135,7 @@
 
 
 <script type="text/javascript"> 
+
 document.getElementById("incident_begin").value=getDateTime((new Date()));
 document.getElementById("incident_end").value=getDateTime((new Date()));
 
@@ -154,11 +155,11 @@ function pad(number) {
 }
 
 function getDateTime(thisdate) {
-      return thisdate.getUTCFullYear() +
-        '-' + pad(thisdate.getUTCMonth() + 1) +
-        '-' + pad(thisdate.getUTCDate()) +
-        'T' + pad(thisdate.getUTCHours()) +
-        ':' + pad(thisdate.getUTCMinutes());
+      return thisdate.getFullYear() +
+        '-' + pad(thisdate.getMonth() + 1) +
+        '-' + pad(thisdate.getDate()) +
+        'T' + pad(thisdate.getHours()) +
+        ':' + pad(thisdate.getMinutes());
     }
 
 //grab incident ID from URL and regEx out
@@ -203,8 +204,8 @@ function validateUpdate(){
 function buildPayload(){
 
     var notes = document.getElementById("close_notes").value
-    var incident_begin = document.getElementById("incident_begin").value
-    var incident_end = document.getElementById("incident_end").value
+    var incident_begin = new Date(Date.parse(document.getElementById("incident_begin").value)).toISOString();
+    var incident_end = new Date(Date.parse(document.getElementById("incident_end").value)).toISOString();
     var close_code = document.getElementById("close_code").value
     var action_code = document.getElementById("action_code").value
     var cause_code = document.getElementById("cause_code").value
