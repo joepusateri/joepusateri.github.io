@@ -7,7 +7,6 @@
 </head>
 <body>
 
-
 <!-- Table for custom fields in incident -->
 <font size="2" face="Sans-serif" >
 <table border="0">
@@ -18,6 +17,22 @@
         </td>
     </tr>
     <tr>
+        <td>
+            <p><span class="mandatory">*</span>Incident Start Time</p>
+        </td>
+        <td>
+            <input type="datetime-local" id="incident_begin" name="incident_begin"> 
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><span class="mandatory">*</span>Incident End Time</p>
+        </td>
+        <td>
+            <input type="datetime-local" id="incident_end" name="incident_end"> 
+        </td>
+    </tr>
+   <tr>
         <td>
             <p><span class="mandatory">*</span>Close Code</p>
         </td>
@@ -120,6 +135,9 @@
 
 
 <script type="text/javascript"> 
+document.getElementById("incident_begin").value=getDateTime((new Date()));
+document.getElementById("incident_end").value=getDateTime((new Date()));
+
 navigator.clipboard.readText()
   .then(text => {
     console.log('Pasted content: ', text);
@@ -127,6 +145,21 @@ navigator.clipboard.readText()
         document.getElementById("pdurl").value=text;
     }
   });
+
+function pad(number) {
+  if (number < 10) {
+    return '0' + number;
+  }
+  return number;
+}
+
+function getDateTime(thisdate) {
+      return thisdate.getUTCFullYear() +
+        '-' + pad(thisdate.getUTCMonth() + 1) +
+        '-' + pad(thisdate.getUTCDate()) +
+        'T' + pad(thisdate.getUTCHours()) +
+        ':' + pad(thisdate.getUTCMinutes());
+    }
 
 //grab incident ID from URL and regEx out
 function getIncidentID(){
