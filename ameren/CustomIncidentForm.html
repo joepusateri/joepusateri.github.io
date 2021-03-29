@@ -186,7 +186,7 @@ function getAPI(){
 //validates fields have been filled in and uses the notes section to update pagerduties notes section 
 function validateUpdate(){
 
-    if(document.getElementById("close_code").value=='none' || document.getElementById("action_code").value=='none' || document.getElementById("cause_code").value=='none' || document.getElementById("close_notes").value=='' || (document.getElementById("pdurl").value =='' && getIncidentID() == ''))
+    if(document.getElementById("close_code").value=='none' || document.getElementById("action_code").value=='none' || document.getElementById("cause_code").value=='none' || document.getElementById("incident_begin").value=='' || document.getElementById("incident_end").value=='' || document.getElementById("close_notes").value=='' || (document.getElementById("pdurl").value =='' && getIncidentID() == ''))
     {
         document.getElementById("validation_msg").style.display = "block";
         return false;
@@ -203,13 +203,15 @@ function validateUpdate(){
 function buildPayload(){
 
     var notes = document.getElementById("close_notes").value
+    var incident_begin = document.getElementById("incident_begin").value
+    var incident_end = document.getElementById("incident_end").value
     var close_code = document.getElementById("close_code").value
     var action_code = document.getElementById("action_code").value
     var cause_code = document.getElementById("cause_code").value
 
     var payload = '{' + 
           ' "note": { ' +
-          ' "content":' +'" '+"ResolutionNotes: close_code:" + close_code + ", action_code:"+ action_code + ", cause_code:"+ cause_code + ", notes:" + notes +' "' +
+          ' "content":' +'" '+"ResolutionNotes: close_code:" + close_code + ", incident_begin:"+ incident_begin + ", incident_end:"+ incident_end + ", action_code:"+ action_code + ", cause_code:"+ cause_code + ", notes:" + notes +' "' +
        '}' +
     '}'
 
