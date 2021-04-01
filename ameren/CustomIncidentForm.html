@@ -148,7 +148,7 @@ navigator.clipboard.readText()
         document.getElementById("pdurl").value=text;
 
         //to prevent stale data from being copied in, clear the clipboard after getting the data
-        //navigator.clipboard.writeText("")
+        navigator.clipboard.writeText("")
     }
   });
 
