@@ -115,22 +115,25 @@
             <input type="email" id="email" size="30" required>
         </td>
     </tr>
-    <tr>
+
+    <tr id="urlblock" style="display: none">
         <td>
             <p>Optional PagerDuty URL</p>
         </td>
         <td>
             <input type="text" id="pdurl" size="50">
         </td>
+        <td>
+            <div id="validation_msg" class="validation_msg" name="validation_msg" style="display: none;color:red">Please fill-in all the details. <br>Did you Share and copy?</div>
+        </td>
     </tr>
     <tr>
-        <td>
-            <div id="validation_msg" class="validation_msg" name="validation_msg" style="display: none;color:red">Please fill-in all the details</div>
-        </td>
+        <td/>
         <td>
             <p/><input type="submit" id="update" value="Submit Resolution Information" onclick="validateUpdate()" />
         </td>
     </tr>
+    <div>a</div>
 </table>
 </font>
 
@@ -210,10 +213,11 @@ function buildPayload(){
     var close_code = document.getElementById("close_code").value
     var action_code = document.getElementById("action_code").value
     var cause_code = document.getElementById("cause_code").value
+    var email = document.getElementById("email").value
 
     var payload = '{' + 
           ' "note": { ' +
-          ' "content":' +'" '+"ResolutionNotes: close_code:" + close_code + ", action_code:"+ action_code + ", cause_code:"+ cause_code + ", incident_begin:"+ incident_begin + ", incident_end:"+ incident_end + ", notes:" + notes +' "' +
+          ' "content":' +'" '+"ResolutionNotes: close_code:" + close_code + ", action_code:"+ action_code + ", cause_code:"+ cause_code + ", incident_begin:"+ incident_begin + ", incident_end:"+ incident_end + ", email:"+ email + ", notes:" + notes +' "' +
        '}' +
     '}'
 
@@ -221,22 +225,6 @@ function buildPayload(){
     return payload
 }
 
-//send payload to pagerduty API - must change token in the header section below
-function sendPayload(payload){
-
-    var email = document.getElementById("email")
-    
-     $.ajax({
-      method: "POST",
-      url: "https://api.pagerduty.com/incidents/"+getIncidentID()+"/notes",
-      headers: { 'Accept': 'application/vnd.pagerduty+json;version=2', 'Authorization': 'Token token='+getAPI(), 'Content-Type': 'application/json', 'From': email.value },
-      data: payload
-    })
-      .done(function( msg ) {
-        alert("Your incident will be updated shortly. No further action required!");
-    });
-
-}
 //send payload to pagerduty API - must change token in the header section below
 function sendPayload(payload){
 
