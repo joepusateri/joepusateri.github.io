@@ -116,7 +116,7 @@
         </td>
     </tr>
 
-    <tr id="urlblock" style="display: none">
+    <tr>
         <td>
             <p>Optional PagerDuty URL</p>
         </td>
@@ -133,7 +133,6 @@
             <p/><input type="submit" id="update" value="Submit Resolution Information" onclick="validateUpdate()" />
         </td>
     </tr>
-    <div>a</div>
 </table>
 </font>
 
@@ -148,6 +147,7 @@ navigator.clipboard.readText()
     console.log('Pasted content: ', text);
     if (text.includes(".pagerduty.com/")) {
         document.getElementById("pdurl").value=text;
+        navigator.clipboard.writeText("")
     }
   });
 
