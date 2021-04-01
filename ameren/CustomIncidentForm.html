@@ -147,7 +147,9 @@ navigator.clipboard.readText()
     console.log('Pasted content: ', text);
     if (text.includes(".pagerduty.com/")) {
         document.getElementById("pdurl").value=text;
-        navigator.clipboard.writeText("")
+
+        //to prevent stale data from being copied in, clear the clipboard after getting the data
+        //navigator.clipboard.writeText("")
     }
   });
 
