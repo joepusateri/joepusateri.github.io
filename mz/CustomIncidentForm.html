@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Update Ticket</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- Table for custom fields in incident -->
+<font size="2" face="Sans-serif" >
+<table border="0">
+    <tr>
+        <td/>
+        <td>
+            <img width="150" src="imgs/Ameren_logo.jpeg"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><span class="mandatory">*</span>Incident Start Time</p>
+        </td>
+        <td>
+            <input type="datetime-local" id="incident_begin" name="incident_begin"> 
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><span class="mandatory">*</span>Incident End Time</p>
+        </td>
+        <td>
+            <input type="datetime-local" id="incident_end" name="incident_end"> 
+        </td>
+    </tr>
+   <tr>
+        <td>
+            <p><span class="mandatory">*</span>Close Code</p>
+        </td>
+        <td>
+            <select name="close_code" style="width:200px" id="close_code">
+                <option value="none" selected="none">--None--</option>
+                <option value="IncidentSolved">Incident Solved</option>
+                <option value="NotSolved">Not Solved</option>
+                <option value="SelfCorrected">Self Corrected</option>
+                <option value="WorkaroundSufficient">Workaround Sufficient</option>
+                <option value="ConvertedtoSR">Converted to SR</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><span class="mandatory">*</span>Action Code</p>
+        </td>
+        <td>
+            <select name="action_code" style="width:200px" id="action_code">
+                <option value="none" selected="none">--None--</option>
+                <option value="ApplicationRestart">Application Restart</option>
+                <option value="ApplicationUpdate">Application Update</option>
+                <option value="DatabaseRestart">Database Restart</option>
+                <option value="Education-Training">Education/Training</option>
+                <option value="SoftwareUpdate">Software Update</option>
+                <option value="Passwordreset">Password reset</option>
+                <option value="ProcessChange">Process or Procedure Change</option>
+                <option value="Reboot">Reboot</option>
+                <option value="Restart">Restart</option>
+                <option value="Retire">Retire</option>
+                <option value="Patch">Patch</option>
+                <option value="Update">Update</option>
+                <option value="Reconfigure">Reconfigure</option>
+                <option value="Repair">Repair</option>
+                <option value="Replace">Replace</option>
+                <option value="Discontinue">Discontinue</option>
+                <option value="NoActionRequired">No Action Required</option>
+            </select>
+        </td>
+    </tr>
+   <tr>
+        <td>
+            <p><span class="mandatory">*</span>Cause Code</p>
+        </td>
+        <td>
+            <select name="cause_code" style="width:200px" id="cause_code">
+                <option value="none" selected="none">--None--</option>
+                <option value="AccessOrPermissionsError">Access Or Permissions Error</option>
+                <option value="CapacityExceeded">Capacity Exceeded</option>
+                <option value="ChangeImplFailure">Change Implementation Failure</option>
+                <option value="EnvFailure">Environmental Failure</option>
+                <option value="ExistingConfigurationError">Existing Configuration Error</option>
+                <option value="HardwareFailure">Hardware Failure</option>
+                <option value="HumanError">Human Error</option>
+                <option value="Malware">Malware</option>
+                <option value="Misuse">Misuse</option>
+                <option value="NotFound">Not Found</option>
+                <option value="ProcedureNotFollowed">Procedure Not Followed</option>
+                <option value="ProcessGap">Process Gap</option>
+                <option value="SoftwareDefect">Software Defect</option>
+                <option value="Vendor">Vendor</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><span class="mandatory">*</span>Additional notes</p>
+        </td>
+        <td>
+            <textarea name="close_notes" rows="3" cols="50" id="close_notes" value=""></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><span class="mandatory">*</span>Pagerduty Account email</p>
+        </td>
+        <td>
+            <input type="email" id="email" size="30" required>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <p>Optional PagerDuty URL</p>
+        </td>
+        <td>
+            <input type="text" id="pdurl" size="50">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="validation_msg" class="validation_msg" name="validation_msg" style="display: none;color:red">Please fill-in all the details. <br>Did you Share and copy?</div>
+        </td>
+        <td>
+            <p/><input type="submit" id="update" value="Submit Resolution Information" onclick="validateUpdate()" />
+        </td>
+    </tr>
+</table>
+</font>
+
+
+<script type="text/javascript"> 
+
+document.getElementById("incident_begin").value=getDateTime((new Date()));
+document.getElementById("incident_end").value=getDateTime((new Date()));
+
+navigator.clipboard.readText()
+  .then(text => {
+    console.log('Pasted content: ', text);
+    if (text.includes(".pagerduty.com/")) {
+        document.getElementById("pdurl").value=text;
+
+        //to prevent stale data from being copied in, clear the clipboard after getting the data
+        navigator.clipboard.writeText("")
+    }
+  });
+
+function pad(number) {
+  if (number < 10) {
+    return '0' + number;
+  }
+  return number;
+}
+
+function getDateTime(thisdate) {
+      return thisdate.getFullYear() +
+        '-' + pad(thisdate.getMonth() + 1) +
+        '-' + pad(thisdate.getDate()) +
+        'T' + pad(thisdate.getHours()) +
+        ':' + pad(thisdate.getMinutes());
+    }
+
+//grab incident ID from URL and regEx out
+function getIncidentID(){
+    var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
+
+    var regEx = /incidents\/(.*)/;
+    var results = regEx.exec(url);
+    if (results != null) {
+        return results[1];
+    } else {
+        var results = regEx.exec(document.getElementById("pdurl").value);
+        if (results != null) {
+            return results[1];
+        }
+    }
+    return "";
+}
+    
+function getAPI(){
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("api-token");
+}    
+
+//validates fields have been filled in and uses the notes section to update pagerduties notes section 
+function validateUpdate(){
+
+    if(document.getElementById("close_code").value=='none' || document.getElementById("action_code").value=='none' || document.getElementById("cause_code").value=='none' || document.getElementById("incident_begin").value=='' || document.getElementById("incident_end").value=='' || document.getElementById("close_notes").value=='' || (document.getElementById("pdurl").value =='' && getIncidentID() == ''))
+    {
+        document.getElementById("validation_msg").style.display = "block";
+        return false;
+    }   
+    else
+    {
+        sendPayload(buildPayload());
+        document.getElementById("validation_msg").style.display = "none";
+        return true;
+    }
+}
+
+// build notes payload using fields from table
+function buildPayload(){
+
+    var notes = document.getElementById("close_notes").value
+    var incident_begin = new Date(Date.parse(document.getElementById("incident_begin").value)).toISOString();
+    var incident_end = new Date(Date.parse(document.getElementById("incident_end").value)).toISOString();
+    var close_code = document.getElementById("close_code").value
+    var action_code = document.getElementById("action_code").value
+    var cause_code = document.getElementById("cause_code").value
+    var email = document.getElementById("email").value
+
+    var payload = '{' + 
+          ' "note": { ' +
+          ' "content":' +'" '+"ResolutionNotes: close_code:" + close_code + ", action_code:"+ action_code + ", cause_code:"+ cause_code + ", incident_begin:"+ incident_begin + ", incident_end:"+ incident_end + ", email:"+ email + ", notes:" + notes +' "' +
+       '}' +
+    '}'
+
+
+    return payload
+}
+
+//send payload to pagerduty API - must change token in the header section below
+function sendPayload(payload){
+
+    var email = document.getElementById("email")
+    
+     $.ajax({
+      method: "POST",
+      url: "https://api.pagerduty.com/incidents/"+getIncidentID()+"/notes",
+      headers: { 'Accept': 'application/vnd.pagerduty+json;version=2', 'Authorization': 'Token token='+getAPI(), 'Content-Type': 'application/json', 'From': email.value },
+      data: payload
+    })
+      .done(function( msg ) {
+        alert("Your incident will be updated shortly. No further action required!");
+    });
+
+}
+
+
+</script>
+</body>
+
+</html>
